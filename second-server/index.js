@@ -26,7 +26,8 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    //must clone this line. or vercel will not work
+    // await client.connect();
 
     const secondDatabase = client.db("SecondDB").collection('data');
 
@@ -81,17 +82,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
-// const person = [
-//     {id:1,name:'riad',email:'riad@gmail.com'},
-//     {id:2,name:'mitu',email:'mitu@gmail.com'},
-//     {id:3,name:'baby',email:'baby@gmail.com'},
-//     {id:4,name:'abbu',email:'abbu@gmail.com'},
-// ]
-
-// app.get('/',(req,res)=>{
-//     res.send(person);
-// })
 
 app.listen(port, ()=>{
     console.log(`Server is running on: ${port}`);

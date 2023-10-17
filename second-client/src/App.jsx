@@ -4,16 +4,16 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 function App() {
-  const [data,setData] = useState([]);
+  const [data, setData] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchData();
-  },[])
+  }, []);
 
   const fetchData = () => {
-    fetch('http://localhost:5000')
-      .then(res => res.json())
-      .then(data => {
+    fetch("https://second-server.vercel.app/")
+      .then((res) => res.json())
+      .then((data) => {
         setData(data);
       });
   };
@@ -25,7 +25,7 @@ function App() {
     const email = form.email.value;
     const user = { name, email };
     console.log(user);
-    fetch("http://localhost:5000/data", {
+    fetch("https://second-server.vercel.app/data", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -37,23 +37,21 @@ function App() {
         console.log(data);
         fetchData();
         form.reset();
-        toast.success('User Added Successfully!')
+        toast.success("User Added Successfully!");
       });
   };
 
-  const handleDeleteButton = id =>{
+  const handleDeleteButton = (id) => {
     console.log(id);
-    fetch(`http://localhost:5000/data/${id}`,{
-      method: 'DELETE'
+    fetch(`https://second-server.vercel.app/data/${id}`, {
+      method: "DELETE",
     })
-    .then(res=>res.json())
-    .then(data=>{
-      console.log(data);
-      fetchData();
-    })
-  }
-
-
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        fetchData();
+      });
+  };
 
   return (
     <>
@@ -70,7 +68,15 @@ function App() {
           </form>
         </div>
         <div>
-            {data.map(el=> <p key={el._id}>{el._id} : {el.name} : {el.email} <Link to={`/update/${el._id}`}><button>Update</button></Link> <button onClick={()=>handleDeleteButton(el._id)}>X</button></p>)}
+          {data.map((el) => (
+            <p key={el._id}>
+              {el._id} : {el.name} : {el.email}{" "}
+              <Link to={`/update/${el._id}`}>
+                <button>Update</button>
+              </Link>{" "}
+              <button onClick={() => handleDeleteButton(el._id)}>X</button>
+            </p>
+          ))}
         </div>
       </div>
     </>

@@ -12,17 +12,17 @@ const Update = () => {
     const email = form.email.value;
     const user = { name, email };
     console.log(user);
-    fetch(`http://localhost:5000/data/${id}`,{
-        method: 'PUT',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
+    fetch(`https://second-server.vercel.app//data/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
     })
-    .then(res=>res.json())
-    .then(data=>{
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
-    })
+      });
   };
 
   return (
